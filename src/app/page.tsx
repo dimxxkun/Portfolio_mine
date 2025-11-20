@@ -101,7 +101,12 @@ export default function Home() {
                   />
                 </p>
                 <div className="mt-9 flex flex-wrap gap-3">
-                  <a href="/cv.pdf" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90">
+                  <a
+                    href="https://drive.google.com/file/d/1gDm1_NtEtD6tkm20qCqGZmCbAIQPE3o2/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+                  >
                     <Download className="h-4 w-4" />
                     Download CV
                   </a>

@@ -79,7 +79,12 @@ export function Navbar() {
                     ))}
                 </nav>
                 <div className="flex items-center gap-2">
-                    <a href="/cv.pdf" className="hidden md:inline-flex">
+                    <a
+                        href="https://drive.google.com/file/d/1gDm1_NtEtD6tkm20qCqGZmCbAIQPE3o2/view?usp=sharing"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hidden md:inline-flex"
+                    >
                         <Button size="sm" variant="secondary">
                             Download CV
                         </Button>
@@ -112,7 +117,9 @@ export function Navbar() {
                                     </a>
                                 ))}
                                 <a
-                                    href="/cv.pdf"
+                                    href="https://drive.google.com/file/d/1gDm1_NtEtD6tkm20qCqGZmCbAIQPE3o2/view?usp=sharing"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
                                 >
                                     Download CV
