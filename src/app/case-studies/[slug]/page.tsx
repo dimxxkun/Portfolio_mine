@@ -1,10 +1,13 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { ScrollToTop } from "@/components/site/scroll-to-top";
 
 interface CaseStudyPageProps {
     params: { slug: string };
@@ -12,6 +15,27 @@ interface CaseStudyPageProps {
 
 export async function generateStaticParams() {
     return caseStudies.map((study) => ({ slug: study.slug }));
+}
+
+// Dynamic metadata for each case study
+export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
+    const study = caseStudies.find((item) => item.slug === params.slug);
+
+    if (!study) {
+        return {
+            title: "Case Study Not Found",
+        };
+    }
+
+    return {
+        title: study.title,
+        description: study.summary,
+        openGraph: {
+            title: study.title,
+            description: study.summary,
+            images: [study.heroImage],
+        },
+    };
 }
 
 export default function CaseStudyPage({ params }: CaseStudyPageProps) {
@@ -23,9 +47,19 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
 
     return (
         <main className="bg-background">
-            <section className="scroll-mt-24 border-b border-border/40 bg-muted/10">
-                <div className="container mx-auto grid gap-10 px-6 py-16 lg:grid-cols-[1.1fr_.9fr]">
+            {/* Hero Section with GIS Theme */}
+            <section className="scroll-mt-24 border-b border-border/40 relative contour-bg">
+                <div className="coordinate-grid pointer-events-none absolute inset-0 opacity-20" />
+                <div className="container mx-auto grid gap-10 px-6 py-16 lg:grid-cols-[1.1fr_.9fr] relative">
                     <div className="space-y-4">
+                        {/* Back Navigation */}
+                        <Button asChild variant="ghost" className="mb-2 -ml-4">
+                            <Link href="/case-studies" className="inline-flex items-center gap-2">
+                                <ArrowLeft className="h-4 w-4" />
+                                Back to Case Studies
+                            </Link>
+                        </Button>
+
                         <Badge variant="outline" className="text-xs">
                             Case Study • {study.period}
                         </Badge>
@@ -48,6 +82,7 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
                             alt={study.title}
                             fill
                             className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                             priority
                         />
                     </div>
@@ -69,7 +104,7 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
                         ))}
                     </div>
                     <div className="space-y-4">
-                        <Card>
+                        <Card className="dashboard-widget">
                             <CardContent className="space-y-4 p-5">
                                 <h3 className="text-lg font-semibold">Impact Snapshot</h3>
                                 <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
@@ -86,7 +121,7 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
                                 </div>
                             </CardContent>
                         </Card>
-                        <Card>
+                        <Card className="layer-card">
                             <CardContent className="space-y-3 p-5">
                                 <h3 className="text-lg font-semibold">Client</h3>
                                 <p className="text-muted-foreground">{study.client}</p>
@@ -98,7 +133,8 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
                     </div>
                 </div>
             </section>
+
+            <ScrollToTop />
         </main>
     );
 }
-

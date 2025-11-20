@@ -15,28 +15,29 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { LanguageSwitcher } from "./language-switcher";
 
+// Use absolute paths so links work from all pages
 const NAV_ITEMS = [
-    { href: "#home", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#experience", label: "Experience" },
-    { href: "#projects", label: "Projects" },
-    { href: "#education", label: "Education" },
-    { href: "#certifications", label: "Certifications" },
-    { href: "#achievement", label: "Achievement" },
-    { href: "#testimonials", label: "Testimonials" },
-    { href: "#stats", label: "Stats" },
-    { href: "#contact", label: "Contact" },
+    { href: "/#home", label: "Home" },
+    { href: "/#about", label: "About" },
+    { href: "/#experience", label: "Experience" },
+    { href: "/#projects", label: "Projects" },
+    { href: "/#education", label: "Education" },
+    { href: "/#certifications", label: "Certifications" },
+    { href: "/#achievement", label: "Achievement" },
+    { href: "/#testimonials", label: "Testimonials" },
+    { href: "/#stats", label: "Stats" },
+    { href: "/#contact", label: "Contact" },
 ];
 
 export function Navbar() {
-    const [activeSection, setActiveSection] = useState("#home");
+    const [activeSection, setActiveSection] = useState("/#home");
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        setActiveSection(`#${entry.target.id}`);
+                        setActiveSection(`/#${entry.target.id}`);
                     }
                 });
             },
@@ -47,7 +48,7 @@ export function Navbar() {
         );
 
         NAV_ITEMS.forEach((item) => {
-            const el = document.querySelector(item.href);
+            const el = document.querySelector(item.href.replace("/", ""));
             if (el) observer.observe(el);
         });
 
@@ -110,7 +111,7 @@ export function Navbar() {
                                         href={item.href}
                                         className={cn(
                                             "rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground",
-                        activeSection === item.href ? "bg-accent/40 font-medium" : ""
+                                            activeSection === item.href ? "bg-accent/40 font-medium" : ""
                                         )}
                                     >
                                         {item.label}
@@ -132,5 +133,3 @@ export function Navbar() {
         </header>
     );
 }
-
-

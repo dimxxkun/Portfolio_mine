@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
+import dynamic from "next/dynamic";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,15 +11,28 @@ import { ProjectsShowcase } from "@/components/site/projects-showcase";
 import { StatsGrid } from "@/components/site/stats-grid";
 import { Footer } from "@/components/site/footer";
 import { ContactForm } from "@/components/site/contact-form";
-import { Download, ChevronDown, Database, Satellite, Network, Code, Map, Layers, Globe, Users, Shield, ExternalLink, Trophy, Star, Crown, Linkedin, Mail } from "lucide-react";
+import { Download, ChevronDown, Database, Satellite, Network, Code, Map, Layers, Globe, Users, Shield, ExternalLink, Trophy, Star, Crown, Linkedin, Mail, MapPin } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Counter } from "@/components/site/counter";
 import { BackgroundGIS } from "@/components/site/background-gis";
 import { CompetenceCard } from "@/components/site/competence-card";
-import { TestimonialCarousel } from "@/components/site/testimonial-carousel";
 import { caseStudies } from "@/data/case-studies";
 import { TransText } from "@/components/site/translation";
-import { MapDemo } from "@/components/site/map-demo";
+import { ScrollToTop } from "@/components/site/scroll-to-top";
+import { CoordinateLabel } from "@/components/site/coordinate-label";
+import { CompassRose } from "@/components/site/compass-rose";
+import { ScaleBar } from "@/components/site/scale-bar";
+
+// Lazy load below-the-fold components for better performance
+const TestimonialCarousel = dynamic(() => import("@/components/site/testimonial-carousel").then(mod => ({ default: mod.TestimonialCarousel })), {
+  loading: () => <div className="h-96 animate-pulse bg-muted/20 rounded-lg" />,
+  ssr: true
+});
+
+const MapDemo = dynamic(() => import("@/components/site/map-demo").then(mod => ({ default: mod.MapDemo })), {
+  loading: () => <div className="h-96 animate-pulse bg-muted/20 rounded-lg" />
+});
+
 
 const HEADLINE =
   "Geospatial & Remote Sensing Specialist | GeoDev & GeoAI Innovator | Utility Networks & Defense GIS | Esri YSA ’25 (3rd Place)";
@@ -74,6 +88,11 @@ const structuredData = {
 export default function Home() {
   return (
     <main className="bg-background">
+      {/* Skip to content link for accessibility */}
+      <a href="#about" className="skip-to-content">
+        Skip to content
+      </a>
+
       <Script
         id="structured-data"
         type="application/ld+json"
@@ -83,8 +102,11 @@ export default function Home() {
       </Script>
       {/* Hero */}
       <section id="home" className="scroll-mt-24">
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden contour-bg">
           <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,theme(colors.primary/20),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_top,theme(colors.primary/25),transparent_55%)]" />
+          <div className="coordinate-grid pointer-events-none absolute inset-0 -z-10 opacity-30" />
+          {/* Coordinate Label */}
+          <CoordinateLabel className="absolute top-4 right-4 md:top-6 md:right-6" />
           <BackgroundGIS />
           <div className="container mx-auto max-w-6xl px-6 py-28 md:py-36 min-h-[calc(100vh-56px)] flex items-center">
             <div className="grid items-center gap-16 md:grid-cols-[1.2fr_.8fr]">
@@ -129,6 +151,7 @@ export default function Home() {
                     alt="Abdulfatai Sanusi"
                     fill
                     className="relative z-10 object-cover"
+                    sizes="(max-width: 768px) 224px, 320px"
                     priority
                   />
                 </div>
@@ -139,7 +162,7 @@ export default function Home() {
       </section>
 
       {/* Sections with placeholders to be filled by you */}
-      <Section id="about" title="About" className="section-panel-1 section-topglow">
+      <Section id="about" title="Spatial Profile" className="section-panel-1 section-topglow">
         <div className="space-y-4 text-muted-foreground">
           <p>
             I&apos;m a Geospatial & Remote Sensing Specialist and GeoDev with{" "}
@@ -152,7 +175,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="competence" title="Core Competence" className="section-panel-2 section-topglow">
+      <Section id="competence" title="Technical Capabilities" className="section-panel-2 section-topglow">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <CompetenceCard
             title="GIS & Remote Sensing"
@@ -365,11 +388,11 @@ export default function Home() {
         />
       </Section>
 
-      <Section id="projects" title="Projects" className="section-panel-1 section-topglow">
+      <Section id="projects" title="GIS Deployments" className="section-panel-1 section-topglow">
         <ProjectsShowcase />
       </Section>
 
-      <Section id="case-studies" title="Case Studies" className="section-panel-2 section-topglow">
+      <Section id="case-studies" title="Field Operations" className="section-panel-2 section-topglow">
         <div className="space-y-6">
           <p className="text-sm text-muted-foreground">
             Deep dives into complex deployments where I owned discovery, architecture, implementation, and change management.
@@ -600,17 +623,17 @@ export default function Home() {
         <TestimonialCarousel />
       </Section>
 
-      <Section id="stats" title="Stats" className="section-panel-2 section-topglow">
+      <Section id="stats" title="Geospatial Metrics" className="section-panel-2 section-topglow">
         <StatsGrid
           stats={[
             { value: (<span><Counter to={5} />+</span>), label: "Years in GIS" },
-            { value: "20+", label: "Projects" },
-            { value: "10+", label: "Certifications" },
+            { value: (<span><Counter to={20} />+</span>), label: "Projects" },
+            { value: (<span><Counter to={10} />+</span>), label: "Certifications" },
           ]}
         />
       </Section>
 
-      <Section id="contact" title="Contact" className="section-panel-1 section-topglow">
+      <Section id="contact" title="Coordinate Connection" className="section-panel-1 section-topglow">
         <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           <Card className="border-border/50 bg-card/60 backdrop-blur">
             <CardContent className="space-y-6 p-6">
@@ -685,6 +708,12 @@ export default function Home() {
         </div>
       </Section>
       <Footer />
+
+      {/* Compass Rose */}
+      <CompassRose />
+
+      {/* Scroll to Top */}
+      <ScrollToTop />
     </main >
   );
 }
