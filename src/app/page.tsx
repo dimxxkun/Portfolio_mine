@@ -22,6 +22,7 @@ import { ScrollToTop } from "@/components/site/scroll-to-top";
 import { CoordinateLabel } from "@/components/site/coordinate-label";
 import { CompassRose } from "@/components/site/compass-rose";
 import { ScaleBar } from "@/components/site/scale-bar";
+import { CursorGlow } from "@/components/site/cursor-glow";
 
 // Lazy load below-the-fold components for better performance
 const TestimonialCarousel = dynamic(() => import("@/components/site/testimonial-carousel").then(mod => ({ default: mod.TestimonialCarousel })), {
@@ -711,6 +712,9 @@ export default function Home() {
 
       {/* Compass Rose */}
       <CompassRose />
+
+      {/* Coordinate Tooltip - Homepage only */}
+      <CursorGlow />
 
       {/* Scroll to Top */}
       <ScrollToTop />

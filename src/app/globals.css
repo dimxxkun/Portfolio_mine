@@ -121,43 +121,6 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  /* GIS-Inspired Terrain Palette */
-  --primary: oklch(0.45 0.15 165);
-  /* Geospatial teal - like water bodies on maps */
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.55 0.12 120);
-  /* Forest green accent - like vegetation */
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.45 0.15 165);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.45 0.15 165);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-
-  /* GIS RGB values for patterns */
   --primary-rgb: 0, 150, 136;
   --card-rgb: 255, 255, 255;
 }
@@ -320,4 +283,47 @@
 /* Horizontal scrollbar (if needed) */
 ::-webkit-scrollbar:horizontal {
   height: 12px;
+}
+
+/* ============================================ */
+/* ENHANCED INTERACTIVE HOVER EFFECTS */
+/* ============================================ */
+
+/* Card magnetic hover effect */
+.interactive-card {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  will-change: transform;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -12px rgba(var(--primary-rgb), 0.25),
+    0 0 0 1px rgba(var(--primary-rgb), 0.1);
+  border-color: hsl(var(--primary) / 0.3);
+}
+
+/* Button glow on hover */
+.btn-glow:hover {
+  box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.4),
+    0 0 40px rgba(var(--primary-rgb), 0.2);
+  transform: translateY(-2px);
+}
+
+/* Smooth lift for all cards */
+[class*="card"]:not(.interactive-card) {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+[class*="card"]:not(.interactive-card):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced focus glow */
+*:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.1);
 }
