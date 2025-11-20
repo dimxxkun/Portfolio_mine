@@ -41,7 +41,7 @@ const MAP_STYLES = {
 export function MapDemo() {
     const mapContainer = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<maplibregl.Map | null>(null);
-    const [mapStyle, setMapStyle] = useState<'street' | 'satellite'>('street');
+    const [mapStyle, setMapStyle] = useState<'street' | 'satellite'>('satellite');
     const [currentCoords, setCurrentCoords] = useState({ lng: 4.5, lat: 7.5 });
     const [showCoords, setShowCoords] = useState(false);
 
@@ -50,7 +50,7 @@ export function MapDemo() {
 
         const map = new maplibregl.Map({
             container: mapContainer.current,
-            style: MAP_STYLES.street,
+            style: MAP_STYLES.satellite as any,
             center: [4.5, 7.5],
             zoom: 6,
             pitch: 0,
